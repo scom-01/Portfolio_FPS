@@ -110,7 +110,7 @@ public class CharMove : MonoBehaviour
         External_Vec_Cal();
         moveDirection = transform.TransformDirection(moveDirection);
         moveDirection.y -= Gravity * GlobalValue.deltaTime;
-        cc.Move(moveDirection * GlobalValue.deltaTime + External_Direction*GlobalValue.deltaTime);
+        cc.Move(moveDirection * GlobalValue.deltaTime + External_Direction * GlobalValue.deltaTime);
         //External_Direction = Vector3.zero;
     }
 
@@ -145,8 +145,8 @@ public class CharMove : MonoBehaviour
             if (External_Direction.x >= 0)
                 External_Direction.x = 0;
         }
-        
-        
+
+
         if (External_Direction.y >= 0)
         {
             External_Direction.y -= Gravity * GlobalValue.deltaTime;

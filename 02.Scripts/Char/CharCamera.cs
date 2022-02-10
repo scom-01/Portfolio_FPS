@@ -27,5 +27,7 @@ public class CharCamera : MonoBehaviour
             y = -90;
 
         this.transform.localRotation = Quaternion.Euler(-y, 0, 0);
+
+        Debug.DrawRay(transform.position, transform.forward * 5f);
     }
 }
