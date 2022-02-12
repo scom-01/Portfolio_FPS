@@ -19,6 +19,6 @@ public class CrossHair : MonoBehaviour
         CrossImg.rectTransform.sizeDelta = new Vector2(GlobalValue.CH_Width, GlobalValue.CH_Height);
         CrossImg.fillAmount = GlobalValue.CH_Height_Fill;
         //Debug.Log(CrossImg.rectTransform.sizeDelta.x);
-        //CrossImg.rectTransform.pivot.y
+        CrossImg.rectTransform.pivot = new Vector2(0.5f, GlobalValue.CH_Pivot_Y);
     }
 }

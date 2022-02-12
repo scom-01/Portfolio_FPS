@@ -12,6 +12,7 @@ public class GlobalValue : MonoBehaviour
     public static float CH_Width = 10;
     public static float CH_Height = 50;
     public static float CH_Height_Fill = 1;
+    public static float CH_Pivot_Y = -0.1f;
     #endregion
 }
 

@@ -9,9 +9,12 @@ public class GameMgr : MonoBehaviour
     public Text VelocityTxt;
     public Text MouseTxt;
     public Text TransformTxt;
+
     public Slider MouseX_Slider;
     public Slider MouseY_Slider;
     public Slider FOV_Slider;
+    public Slider CH_Size_Slider;
+    public Slider CH_Pivot_Slider;
     
     GameObject Player1;
     CharacterController cc;
@@ -45,8 +48,13 @@ public class GameMgr : MonoBehaviour
         GlobalValue.MouseXSpeed = MouseX_Slider.value;
         GlobalValue.MouseYSpeed = MouseY_Slider.value;
 
+        //FOV
         Camera.main.fieldOfView = FOV_Slider.value;
         FOV_Slider.GetComponentInChildren<Text>().text = string.Format("FOV : {0:F0}",Camera.main.fieldOfView);
+
+        //CrossHair
+        GlobalValue.CH_Height_Fill = CH_Size_Slider.value / 5;
+        GlobalValue.CH_Pivot_Y = CH_Pivot_Slider.value * -1;
     }
 
     void CusorOnOff()
