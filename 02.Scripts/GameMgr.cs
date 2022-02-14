@@ -15,7 +15,9 @@ public class GameMgr : MonoBehaviour
     public Slider FOV_Slider;
     public Slider CH_Size_Slider;
     public Slider CH_Pivot_Slider;
-    
+
+    public GameObject Map;
+
     GameObject Player1;
     CharacterController cc;
     // Start is called before the first frame update
@@ -29,6 +31,7 @@ public class GameMgr : MonoBehaviour
     void Update()
     {
         CusorOnOff();
+        MapOnOff();
         DebugCanvas();
     }
 
@@ -64,5 +67,13 @@ public class GameMgr : MonoBehaviour
             Cursor.visible = Cursor.visible == true ? false : true;
             Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.Confined : CursorLockMode.Locked;
         }
+    }
+
+    void MapOnOff()
+    {
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            Map.SetActive(Map.activeSelf ? false : true);
+        }        
     }
 }

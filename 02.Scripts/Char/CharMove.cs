@@ -206,6 +206,11 @@ public class CharMove : MonoBehaviour
         if (hit.transform.tag == "JumpPad")
         {
             External_Direction.y = 30;
+            //External_Direction.x = 10;
+            Vector3 c = (transform.position - hit.transform.position);
+            Debug.Log(c);
+            External_Direction += c * 10;
+            
         }
     }
 }
