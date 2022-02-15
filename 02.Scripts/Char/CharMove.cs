@@ -16,6 +16,7 @@ public class CharMove : MonoBehaviour
     //public bool isGround = true;
 
     public CharState CurState;
+    public Animator PlayerAnimator;
 
     private Vector3 moveDirection = Vector3.zero;
     private Vector3 External_Direction = Vector3.zero;
@@ -86,6 +87,9 @@ public class CharMove : MonoBehaviour
         {
             h -= GlobalValue.deltaTime * 50f;
         }
+
+        PlayerAnimator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
+        PlayerAnimator.SetFloat("Vertical", Input.GetAxis("Vertical"));
 
         if (cc.isGrounded)
         {
@@ -207,9 +211,9 @@ public class CharMove : MonoBehaviour
         {
             External_Direction.y = 30;
             //External_Direction.x = 10;
-            Vector3 c = (transform.position - hit.transform.position);
-            Debug.Log(c);
-            External_Direction += c * 10;
+            //Vector3 c = (transform.position - hit.transform.position);
+            //Debug.Log(c);
+            //External_Direction += c * 10;
             
         }
     }
