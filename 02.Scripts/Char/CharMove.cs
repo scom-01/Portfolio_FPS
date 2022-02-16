@@ -13,7 +13,7 @@ public class CharMove : MonoBehaviour
     public float WalkSpeed = 6.0f;
     public float Jumpforce = 8.0f;
     public float MaxSpeed = 5.0f;
-    //public bool isGround = true;
+    public bool isGround = true;
 
     public CharState CurState;
     public Animator PlayerAnimator;
@@ -31,6 +31,7 @@ public class CharMove : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         cc = GetComponent<CharacterController>();
+        PlayerAnimator.gameObject.transform.localPosition = new Vector3(0, cc.bounds.extents.y * -1, 0);
     }
 
     // Update is called once per frame
@@ -38,7 +39,9 @@ public class CharMove : MonoBehaviour
     {
         //IsGround();
         //TryJump();
+        Fire();
         Rotate();
+        IsGround();
         Move();
         //Debug.Log(moveDirection.y);
     }
@@ -61,6 +64,7 @@ public class CharMove : MonoBehaviour
     {
         h = 0;
         v = 0;
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Speed = WalkSpeed / 2;
@@ -87,9 +91,16 @@ public class CharMove : MonoBehaviour
         {
             h -= GlobalValue.deltaTime * 50f;
         }
-
+        
         PlayerAnimator.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         PlayerAnimator.SetFloat("Vertical", Input.GetAxis("Vertical"));
+
+        PlayerAnimator.SetBool("Grounded", cc.isGrounded);
+        //Ray ray;
+        //ray = new Ray(transform.position, Vector3.down);
+        //Debug.DrawRay(transform.position, Vector3.down * (cc.bounds.extents.y + 0.3f), Color.red);
+        PlayerAnimator.SetBool("JumpMotion", isGround);
+        PlayerAnimator.SetFloat("VelocityY", cc.velocity.y);
 
         if (cc.isGrounded)
         {
@@ -118,22 +129,49 @@ public class CharMove : MonoBehaviour
         //External_Direction = Vector3.zero;
     }
 
-    //private void IsGround()
-    //{
-    //    if (Physics.Raycast(transform.position, Vector3.down, cc.bounds.extents.y + 0.1f)|| //중점
-    //        Physics.Raycast(transform.position + transform.forward* cc.bounds.extents.x, Vector3.down, cc.bounds.extents.y + 0.1f)||
-    //        Physics.Raycast(transform.position - transform.forward * cc.bounds.extents.x, Vector3.down, cc.bounds.extents.y + 0.1f)||
-    //        Physics.Raycast(transform.position + transform.right * cc.bounds.extents.x, Vector3.down, cc.bounds.extents.y + 0.1f)||
-    //        Physics.Raycast(transform.position - transform.right * cc.bounds.extents.x, Vector3.down, cc.bounds.extents.y + 0.1f))
-    //    {
-    //        isGround = true;
-    //    }
-    //    else
-    //    {
-    //        isGround = false;
-    //    }
-    //    //isGround = Physics.Raycast(transform.position, Vector3.down, capsulColl.bounds.extents.y + 0.1f);
-    //}
+    private void Fire()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            GlobalValue.Fire = true;
+        }
+        else
+        {
+            GlobalValue.Fire = false;
+        }
+        PlayerAnimator.SetBool("Fire", GlobalValue.Fire);
+    }
+
+    private void IsGround()
+    {
+        Debug.DrawRay(transform.position, Vector3.down * (cc.bounds.extents.y + 0.2f), Color.red);
+        Debug.DrawRay(transform.position + transform.forward * cc.bounds.extents.x, Vector3.down * (cc.bounds.extents.y + 0.2f), Color.red);
+        Debug.DrawRay(transform.position - transform.forward * cc.bounds.extents.x, Vector3.down * (cc.bounds.extents.y + 0.2f), Color.red);
+        Debug.DrawRay(transform.position + transform.right * cc.bounds.extents.x, Vector3.down * (cc.bounds.extents.y + 0.2f), Color.red);
+        Debug.DrawRay(transform.position - transform.right * cc.bounds.extents.x, Vector3.down * (cc.bounds.extents.y + 0.2f), Color.red);
+        Debug.DrawRay(transform.position + transform.right * cc.bounds.extents.x / 2 + transform.forward * cc.bounds.extents.x / 2, Vector3.down * (cc.bounds.extents.y + 0.2f), Color.red);
+        Debug.DrawRay(transform.position - transform.right * cc.bounds.extents.x / 2 + transform.forward * cc.bounds.extents.x / 2, Vector3.down * (cc.bounds.extents.y + 0.2f), Color.red);
+        Debug.DrawRay(transform.position + transform.right * cc.bounds.extents.x / 2 - transform.forward * cc.bounds.extents.x / 2, Vector3.down * (cc.bounds.extents.y + 0.2f), Color.red);
+        Debug.DrawRay(transform.position - transform.right * cc.bounds.extents.x / 2 - transform.forward * cc.bounds.extents.x / 2, Vector3.down * (cc.bounds.extents.y + 0.2f), Color.red);
+
+        if (Physics.Raycast(transform.position, Vector3.down, cc.bounds.extents.y + 0.2f) || //중점
+            Physics.Raycast(transform.position + transform.forward * cc.bounds.extents.x, Vector3.down, cc.bounds.extents.y + 0.2f) ||
+            Physics.Raycast(transform.position - transform.forward * cc.bounds.extents.x, Vector3.down, cc.bounds.extents.y + 0.2f) ||
+            Physics.Raycast(transform.position + transform.right * cc.bounds.extents.x, Vector3.down, cc.bounds.extents.y + 0.2f) ||
+            Physics.Raycast(transform.position - transform.right * cc.bounds.extents.x, Vector3.down, cc.bounds.extents.y + 0.2f)||
+            Physics.Raycast(transform.position + transform.right * cc.bounds.extents.x / 2 + transform.forward * cc.bounds.extents.x / 2, Vector3.down, cc.bounds.extents.y + 0.2f)||
+            Physics.Raycast(transform.position - transform.right * cc.bounds.extents.x / 2 + transform.forward * cc.bounds.extents.x / 2, Vector3.down, cc.bounds.extents.y + 0.2f) ||
+            Physics.Raycast(transform.position + transform.right * cc.bounds.extents.x / 2 - transform.forward * cc.bounds.extents.x / 2, Vector3.down, cc.bounds.extents.y + 0.2f) ||
+            Physics.Raycast(transform.position - transform.right * cc.bounds.extents.x / 2 - transform.forward * cc.bounds.extents.x / 2, Vector3.down, cc.bounds.extents.y + 0.2f))
+        {
+            isGround = true;
+        }
+        else
+        {
+            isGround = false;
+        }
+        //isGround = Physics.Raycast(transform.position, Vector3.down, capsulColl.bounds.extents.y + 0.1f);
+    }
 
     void External_Vec_Cal()
     {
