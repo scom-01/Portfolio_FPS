@@ -105,8 +105,6 @@ public class CharMove : MonoBehaviour
         if (cc.isGrounded)
         {
             moveDirection = new Vector3(h, 0, v).normalized;
-            //moveDirection.x = h;
-            //moveDirection.z = v;
             moveDirection *= Speed;
 
             if (Input.GetButton("Jump"))
