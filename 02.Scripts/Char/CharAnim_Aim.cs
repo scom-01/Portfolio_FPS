@@ -86,6 +86,7 @@ public class CharAnim_Aim : MonoBehaviour
         //Upper_Chest.localRotation = Camera.main.transform.localRotation * Quaternion.Euler(new Vector3(20, 0, 0));
         Debug.DrawRay(Left_Shoulder.position, Camera.main.transform.forward * 3f, Color.cyan);
         Debug.DrawRay(Right_Shoulder.position, Camera.main.transform.forward * 3f, Color.cyan);
+
         Right_Shoulder.rotation = Right_Shoulder.rotation;// + );
         Left_Shoulder.rotation = Left_Shoulder.rotation * Quaternion.Euler(Camera.main.transform.forward);// + );
         //Debug.Log(Camera.main.transform.eulerAngles);
